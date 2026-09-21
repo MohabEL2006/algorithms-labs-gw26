@@ -71,20 +71,20 @@ def bubble_sort(arr):
 > | | | $9 > 1$ | SWAP | `[2, 5, 1, 9, 5, 6]` | |
 > | | | $9 > 5$ | SWAP | `[2, 5, 1, 5, 9, 6]` | |
 > | | | $9 > 6$ | SWAP | `[2, 5, 1, 5, 6, 9]` | `[9]` |
-> | **2 (TODO)** | $j=0 \dots 3$ | $arr[0]$ vs $arr[1]$: | | | |
-> | | | $arr[1]$ vs $arr[2]$: | | | |
-> | | | $arr[2]$ vs $arr[3]$: | | | |
-> | | | $arr[3]$ vs $arr[4]$: | | `[                      ]` | `[       ]` |
-> | **3 (TODO)** | $j=0 \dots 2$ | $arr[0]$ vs $arr[1]$: | | | |
-> | | | $arr[1]$ vs $arr[2]$: | | | |
-> | | | $arr[2]$ vs $arr[3]$: | | `[                      ]` | `[          ]` |
-> | **4 (TODO)** | $j=0 \dots 1$ | $arr[0]$ vs $arr[1]$: | | | |
-> | | | $arr[1]$ vs $arr[2]$: | | `[                      ]` | `[             ]` |
-> | **Exit** | Did any swaps occur in Pass 4? Explain early stopping: | | | `[                      ]` | **Sorted!** |
+> | **2 (TODO)** | $j=0 \dots 3$ | $arr[0]$ vs $arr[1]$:  | KEEP |`[2, 5, 1, 5, 6, 9'` | |
+> | | | $arr[1]$ vs $arr[2]$:  | SWAP   |`[2,1,5,5,6,9]` | |
+> | | | $arr[2]$ vs $arr[3]$: | KEEP  |`[2,1,5,5,6,9]` | |
+> | | | $arr[3]$ vs $arr[4]$:  | KEEP | `[2,1,5,5,6,9]` | `[6,9]` |
+> | **3 (TODO)** | $j=0 \dots 2$ | $arr[0]$ vs $arr[1]$: | SWAP | `[1,2,5,5,6,9]` | |
+> | | | $arr[1]$ vs $arr[2]$: | KEEP | `[1,2,5,5,6,9]` | |
+> | | | $arr[2]$ vs $arr[3]$: | KEEP | `[1,2,5,5,6,9]` | `[5,6,9]` |
+> | **4 (TODO)** | $j=0 \dots 1$ | $arr[0]$ vs $arr[1]$: | KEEP | `[1,2,5,5,6,9]` | |
+> | | | $arr[1]$ vs $arr[2]$: | KEEP | `[1,2,5,5,6,9]` | `5,5,6,9[]` |
+> | **Exit** | Did any swaps occur in Pass 4? Explain early stopping: | No swaps occured at pass 4 | | `[1,2,5,5,6,9]` | **Sorted!** |
 > 
 > ```text
-> Total Comparisons performed: 
-> Total Swaps performed: 
+> Total Comparisons performed: 14
+> Total Swaps performed: 6
 > ```
 > *(Tip: You can verify your trace by running `python sorting_trace.py`)*
 
@@ -147,19 +147,19 @@ A sorting algorithm is **stable** if elements with equal keys appear in the outp
 > TODO 1.3A (Inversions & Shifts):
 > List all inversions (pairs of indices (i, j) where i < j and arr[i] > arr[j])
 > in the initial array [7, 3, 5, 8, 2]:
-> - Inversions: 
-> - Total number of inversions: 
-> - Does this total exactly equal the number of shifts you counted in Task 1.2? (Yes/No): 
+> - Inversions: (0,1) (0,2) (3,4) (2,3) (1,2) (0,1)
+> - Total number of inversions: 6
+> - Does this total exactly equal the number of shifts you counted in Task 1.2? (Yes/No): yes
 > 
 > TODO 1.3B (Early Stopping Flag):
 > Why does Bubble Sort require an explicit boolean flag (`swapped`) to achieve
 > O(N) best-case time on sorted data, whereas Insertion Sort naturally achieves O(N) without any flag?
-> A: 
+> A: For bubble sort it needs a flag that a swap did not happen and by that it achieves O(n) if not it would go longer but for insertion it only needs to find one element thats not greater than the key in order to stop and flag the array as sorted so thats why it achieves O(n) normally
 > 
 > TODO 1.3C (Stability):
 > If a programmer changes line 33 of Bubble Sort to `if arr[j] >= arr[j + 1]:`,
 > does the algorithm still produce a sorted array? Does it remain stable? Explain why or why not.
-> A: 
+> A: Yes it would as it only needs to check if the element is greater if its equal it does not need to sort or smaller as its basically already sorted so it just needs to check if its strictly greater as it cant do anything if the element is the same
 > ```
 
 ---
@@ -213,13 +213,13 @@ At the beginning of each iteration of the `for j` loop, the array is partitioned
 > |---|---|---|---|---|---|---|---|
 > | **Init** | - | - | Initialize $i = low - 1 = -1$ | $-1$ | `[2, 8, 7, 1, 3, 5, 6, 4]` | `[]` | `[]` |
 > | **0 (Ex)** | `2` | Yes ($2 \le 4$) | $i \leftarrow 0$, swap $arr[0]$ with $arr[0]$ | 0 | `[2, 8, 7, 1, 3, 5, 6, 4]` | `[2]` | `[]` |
-> | **1 (TODO)** | `8` | | | | `[                       ]` | | |
-> | **2 (TODO)** | `7` | | | | `[                       ]` | | |
-> | **3 (TODO)** | `1` | | | | `[                       ]` | | |
-> | **4 (TODO)** | `3` | | | | `[                       ]` | | |
-> | **5 (TODO)** | `5` | | | | `[                       ]` | | |
-> | **6 (TODO)** | `6` | | | | `[                       ]` | | |
-> | **End (TODO)**| - | - | Swap $arr[i+1]$ with $arr[high]$: | | `[                       ]` | **Final Pivot Index:** | |
+> | **1 (TODO)** | `8` | No ($8 > 4) | No change | 0 | `[2, 8, 7, 1, 3, 5, 6, 4]` | `[2]` | `[8]` |
+> | **2 (TODO)** | `7` | No ($7 > 4$) | No change | 0 | `[2, 8, 7, 1, 3, 5, 6, 4]` | `[2]` | `[8, 7]` |
+> | **3 (TODO)** | `1` | Yes ($1 \le 4$) | $i \leftarrow 1$, swap $arr[1]$ with $arr[3]$ | 1 | `[2, 1, 7, 8, 3, 5, 6, 4]` | `[2, 1]` | `[7, 8]` |
+> | **4 (TODO)** | `3` | Yes ($3 \le 4$) | $i \leftarrow 2$, swap $arr[2]$ with $arr[4]$ | 2 | `[2, 1, 3, 8, 7, 5, 6, 4]` | `[2, 1, 3]` | `[8, 7]` |
+> | **5 (TODO)** | `5` | No ($5 > 4$) | No change | 2 | `[2, 1, 3, 8, 7, 5, 6, 4]` | `[2, 1, 3]` | `[8, 7, 5]` |
+> | **6 (TODO)** | `6` | No ($6 > 4$) | No change | 2 | `[2, 1, 3, 8, 7, 5, 6, 4]` | `[2, 1, 3]` | `[8, 7, 5, 6]` |
+> | **End (TODO)**| - | - | Swap $arr[i+1]$ with $arr[high]$: swap $arr[3]$ with $arr[7]$ | 2 | `[2, 1, 3, 4, 7, 5, 6, 8]` | **Final Pivot Index: 3** | |
 > 
 > ```text
 > Resulting Left Subarray (<= 4): 
@@ -261,13 +261,13 @@ python lomuto_partition.py
 > - What will the final value of i be at the end of the loop?
 > - What index will the pivot end up at?
 > - What are the sizes of the two recursive subproblems passed to quicksort?
-> A:
+> A: The value of I at the end will be, and the index the pivot ends up at is also 4, and resulting subproblem size is 0.
 > 
 > TODO 2.2B:
 > Run `python lomuto_partition.py` to view DEMO 3.
 > How does Hoare partition partition the array [5, 5, 5, 5, 5]?
 > What are the resulting subproblem sizes?
-> A:
+> A: Hoare partition splits the array roughly in half. For [5, 5, 5, 5, 5], the resulting subproblem sizes are 3 and 2.
 > ```
 
 ---
