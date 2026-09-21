@@ -142,8 +142,8 @@ and the array state after each step. The first row is worked.
 | Step | Current `i` | Value at `i` | Children (left, right) | Largest index | Action taken | Array afterward |
 |---|---|---|---|---|---|---|
 | 1 | 0 | 4 | `left=1` (10), `right=2` (8) | 1 | Swap `arr[0]` with `arr[1]` | `[10, 4, 8, 5, 1, 2, 7]` |
-| 2 | TODO | TODO | TODO | TODO | TODO | TODO |
-| 3 | TODO | TODO | TODO | TODO | TODO | TODO |
+| 2 | 1 | 4 | `left=3` (5), `right=4` (1) | 0 | Swap `arr[1]` with `arr[3]` | `[10, 5, 8, 4, 1, 2, 7]` |
+| 3 | 2 | 8 | `left=4` (2), `right=5` (7) | 0 | None | `[10, 5, 8, 4, 1, 2, 7]` |
 
 ### 1.2 Trace: Heapsort extraction passes
 
@@ -156,8 +156,8 @@ the growing sorted suffix. Pass 1 is worked.
 | Pass (`end`) | Swap root with `arr[end]` | Active heap size | Active heap after `max_heapify_down` | Sorted suffix | Full array afterward |
 |---|---|---|---|---|---|
 | 6 | Swap `15` with `7` | 6 | `[12, 7, 8, 6, 2, 3]` | `[15]` | `[12, 7, 8, 6, 2, 3, 15]` |
-| 5 | TODO | TODO | TODO | TODO | TODO |
-| 4 | TODO | TODO | TODO | TODO | TODO |
+| 5 | Swap `12` with `3` | 5 | `[3, 7, 8, 6, 2]` | `[12,15]` | `[3, 7, 8, 2, 12, 15]` |
+| 4 | Swap `8` with `2` | 4 | `[2, 3, 7, 6]` | `[8,12,15]` | `[2, 3, 7, 8]` |
 | 3 | TODO | TODO | TODO | TODO | TODO |
 | 2 | TODO | TODO | TODO | TODO | TODO |
 | 1 | TODO | TODO | TODO | TODO | TODO |
@@ -167,6 +167,8 @@ Record the final sorted array returned by `heap_sort`.
 ### 1.3 Implementation
 
 **TODO 1.3A:** Implement `max_heapify_down(arr, i, heap_size)` in `heap_practice.py`.
+
+
 
 **TODO 1.3B:** Implement the extraction loop of `heap_sort(arr)` in `heap_practice.py`.
 
@@ -180,9 +182,12 @@ python3 heap_practice.py
 repeatedly extracting the root to the end of the array, whereas using a Min-Heap
 produces a descending sort?
 
+Becuase Max-Heap needs to ensure that the root is the highest node in value but for min heap it needs to make sure its the minimum value on the root
+
 **TODO 1.4B:** Bottom-up heap construction (`build_max_heap`) takes $O(n)$ time,
 yet `heap_sort` overall requires $O(n \log n)$ time. Where does the additional
 time come from during the sorting phase?
+
 
 Building a heap takes $\Theta(n)$ time. Each of the $n - 1$ extractions performs
 at most $O(\log n)$ sift-down work, yielding $\Theta(n \log n)$ total time and
