@@ -298,7 +298,7 @@ traversal of the tree after insertion. The first two rows are worked.
 |---|---|---|---|
 | 40 | None (Root) | Root | `[40]` |
 | 20 | 40 | Left | `[20, 40]` |
-| 60 | TODO | TODO | TODO |
+| 60 | 40 | Right | `[20, 40, 60]` |
 | 10 | TODO | TODO | TODO |
 | 30 | TODO | TODO | TODO |
 | 50 | TODO | TODO | TODO |
