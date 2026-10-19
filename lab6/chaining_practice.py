@@ -61,6 +61,16 @@ def chaining_insert(table, key, value):
   4. If load_factor(table) > table.max_load, call chaining_rehash(table, 2 * table.capacity).
   """
   # TODO 2.2A: Implement Separate Chaining insertion and dynamic resize check.
+  buck_index = key % table.capacity
+  for entry in table.buckets[buck_index]:
+    if entry[0] == key:
+      entry[1] = value
+      return 
+  table.buckets[buck_index].append([key,value])
+  table.size = table.size + 1
+  if load_factor(table) > table.max_load:
+    chaining_rehash(table, 2 * table.capacity)
+  return
   raise NotImplementedError("Complete chaining_insert")
 
 

@@ -114,9 +114,9 @@ worked for you.
 | Key $k$ | Binary (8-bit) | Last 3 Bits | Division $k \bmod 8$ ($m = 8$) | Prime Division $k \bmod 7$ ($m = 7$) | Multiplication $\lfloor 8 \cdot ((k \cdot A) \bmod 1) \rfloor$ ($m = 8$) |
 |---|---|---|---|---|---|
 | 19 | `00010 011` | `011` | `19 % 8 = 3` | `19 % 7 = 5` | `floor(8 * 0.7426) = 5` |
-| 51 | `00110 011` | `011` | TODO | TODO | `floor(8 * 0.5197) = 4` |
-| 83 | `01010 011` | `011` | TODO | TODO | `floor(8 * 0.2968) = 2` |
-| 115 | `01110 011` | `011` | TODO | TODO | `floor(8 * 0.0739) = 0` |
+| 51 | `00110 011` | `011` | `51 % 8 = 3` | `51 % 7 = 2` | `floor(8 * 0.5197) = 4` |
+| 83 | `01010 011` | `011` | `83 % 8 = 3` | `83 % 7 = 3` | `floor(8 * 0.2968) = 2` |
+| 115 | `01110 011` | `011` | `115 % 8 = 3` | `115 % 7 = 2` | `floor(8 * 0.0739) = 0` |
 
 ### 1.2 Implementation
 
@@ -137,7 +137,7 @@ python3 hash_functions_practice.py
 Table 1.1. Why did all four keys collide into slot `3` when $m = 8$, and why did
 choosing a prime table size ($m = 7$) spread them into different slots?
 
----
+--- because 7 is a prime number so it didn't extract the last bits of the representation of each number while 8 which is a power of 2 (2^3) only extracted the last 3 bits and they all ended in the same pattern 011 which equates to 3 thus why all keys collide into the same slot 3 or 011.
 
 ## Part 2: Collision Resolution Strategy 1: Separate Chaining
 
@@ -229,9 +229,9 @@ are worked for you.
 |---|---|---|---|---|---|
 | 1 | `(12, "A")` | `12 % 7 = 5` | `[[12, "A"]]` | 1 | `1/7 ≈ 0.14` |
 | 2 | `(19, "B")` | `19 % 7 = 5` | `[[12, "A"], [19, "B"]]` | 2 | `2/7 ≈ 0.29` |
-| 3 | `(24, "C")` | TODO | TODO | TODO | TODO |
-| 4 | `(26, "D")` | TODO | TODO | TODO | TODO |
-| 5 | `(31, "E")` | TODO | TODO | TODO | TODO |
+| 3 | `(24, "C")` | `24 % 7 = 3` | `[[24, "C"]]` | 1 | `1/7 ≈ 0.14 ` |
+| 4 | `(26, "D")` | `26 % 7 = 5` | `[[12, "A"], [19, "B"], [26, "D"]]` | 3 | `3/7 ≈ 0.43` |
+| 5 | `(31, "E")` | `31 % 7 = 3` | `[[24, "C"], [31, "E"]]` | 2 | `2/7 ≈ 0.29`  |
 
 ### 2.2 Implementation
 
