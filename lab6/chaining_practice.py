@@ -68,10 +68,10 @@ def chaining_insert(table, key, value):
       return 
   table.buckets[buck_index].append([key,value])
   table.size = table.size + 1
-  if load_factor(table) > table.max_load:
+  if load_factor(table) >  table.max_load:
     chaining_rehash(table, 2 * table.capacity)
   return
-  raise NotImplementedError("Complete chaining_insert")
+  # raise NotImplementedError("Complete chaining_insert")
 
 
 def chaining_lookup(table, key):
@@ -83,6 +83,11 @@ def chaining_lookup(table, key):
   3. If not found in the bucket, return None.
   """
   # TODO 2.2B: Scan bucket (key % table.capacity) for matching key and return its value or None.
+  buck_index = key % table.capacity
+  for entry in table.buckets[buck_index]:
+      if entry[0] == key:
+        return entry[1]
+  return None
   raise NotImplementedError("Complete chaining_lookup")
 
 
