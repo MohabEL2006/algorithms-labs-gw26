@@ -12,8 +12,13 @@ def naive_search(text, pattern):
     matches = []
 
     # TODO 1.2: compare characters at each shift and collect complete matches
-    raise NotImplementedError("Complete naive_search")
-
+    # raise NotImplementedError("Complete naive_search")
+    for s in range(n - m + 1):
+        j = 0
+        while j < m and text[s + j] == pattern[j]:
+            j = j + 1
+        if j == m:
+            matches.append(s)
     return matches
 
 
@@ -32,7 +37,19 @@ def rabin_karp(text, pattern, d=256, q=101):
     t = 0
 
     # TODO 2.2: build the initial hashes, verify hits, and roll to each next window
-    raise NotImplementedError("Complete rabin_karp")
+    # raise NotImplementedError("Complete rabin_karp")
+
+    for i in range(m):
+        p = (d * p + ord(pattern[i])) % q
+        t = (d * t + ord(text[i])) % q
+
+    for s in range(n - m + 1):
+        if p == t:
+            if text[s:s + m] == pattern:
+                matches.append(s)
+
+        if s < n - m:
+            t = (d * (t - ord(text[s]) * h) + ord(text[s + m])) % q
 
     return matches
 
@@ -47,7 +64,16 @@ def compute_prefix_function(pattern):
     k = 0
 
     # TODO 3.2A: extend each border, following prefix links on a mismatch
-    raise NotImplementedError("Complete compute_prefix_function")
+    # raise NotImplementedError("Complete compute_prefix_function")
+    
+    for j in range(1, m):
+        while k > 0 and pattern[k] != pattern[j]:
+            k = pi[k - 1]
+
+        if pattern[k] == pattern[j]:
+            k += 1
+
+        pi[j] = k
 
     return pi
 
@@ -65,7 +91,18 @@ def kmp_search(text, pattern):
     q = 0
 
     # TODO 3.2B: scan the text with prefix fallbacks and record all matches
-    raise NotImplementedError("Complete kmp_search")
+    # raise NotImplementedError("Complete kmp_search")
+
+    for i in range(n):
+        while q > 0 and pattern[q] != text[i]:
+            q = pi[q - 1]
+
+        if pattern[q] == text[i]:
+            q += 1
+
+        if q == m:
+            matches.append(i - m + 1)
+            q = pi[q - 1]
 
     return matches
 
