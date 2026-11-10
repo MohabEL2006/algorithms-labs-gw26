@@ -89,8 +89,8 @@ order, are `[0, 1, 1, 2, 1]`. Visit neighbors in the order shown.
 | Vertex removed | Queue afterward | In-degree of `D` |
 |---|---|---|
 | A | `[B, C]` | 2 |
-| B | TODO | TODO |
-| C | TODO | TODO |
+| B | `[C]` | 1 |
+| C | `[D]` | 0 |
 
 Now add the edge `E -> B`. Which vertices reach the output before the
 algorithm stops? What does the function return?
@@ -248,12 +248,16 @@ calls, then decide whether the edge is accepted.
 
 | Edge | Roots | Accept? | Total weight |
 |---|---|---|---|
-| `(B, D): 4` | TODO | TODO | TODO |
-| `(A, C): 5` | TODO | TODO | TODO |
-| `(D, E): 6` | TODO | TODO | TODO |
+| `(B, D): 4` | `(A,A)` | No | 6 |
+| `(A, C): 5` | `(A,A)` | No | 6 |
+| `(D, E): 6` | `(A,E)` | Yes | 12 |
 
 After checking `(B, D)`, what is `parent[D]`? Explain why a rejected edge
 can still change the parent array. Does Kruskal examine `(C, E): 7`?
+
+parent[D] = A because path compression updates D's parent directly to the root A.
+Because find() performs path compression even when union() rejects an edge for creating a cycle.
+No, because the MST already contains \(V-1=4\) edges after accepting (D, E).
 
 ### 2.3 Analysis
 
@@ -263,6 +267,18 @@ bound of `O(α(V))` per union-find operation, where `α` grows extremely slowly.
 Which step dominates? What changes if the edges are already sorted?
 
 ---
+\[
+O(E\log E + V + E\alpha(V))
+\]
+
+Explanation: Initializing union-find takes \(O(V)\), sorting edges takes \(O(E\log E)\), and processing edges takes \(O(E\alpha(V))\).
+
+Which step dominates? Sorting the edges dominates for a connected graph.
+
+What if edges are already sorted? If sorting can be skipped, the running time becomes:
+\[
+O(V+E\alpha(V))
+\]
 
 ## Final check
 
