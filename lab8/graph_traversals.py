@@ -28,7 +28,17 @@ def bfs(graph, source):
     queue = deque([source])
 
     # TODO 2.2: process the queue and discover each unvisited neighbor
-    raise NotImplementedError("Complete bfs")
+    # raise NotImplementedError("Complete bfs")
+
+    while queue:
+        u = queue.popleft()
+
+        for v in graph[u]:
+            if not visited[v]:
+                visited[v] = True
+                dist[v] = dist[u] + 1
+                parent[v] = u
+                queue.append(v)
 
     return dist, parent
 
@@ -42,9 +52,17 @@ def reconstruct_path(parent, source, target):
     current = target
 
     # TODO 2.3: follow parents, reverse the path, and check that it starts at source
-    raise NotImplementedError("Complete reconstruct_path")
+    # raise NotImplementedError("Complete reconstruct_path")
 
-    return path
+    while current is not None:
+        path.append(current)
+        current = parent[current]
+    path.reverse()
+    if path and path[0] == source:
+        return path 
+
+    
+    return []
 
 
 def dfs(graph):
@@ -63,10 +81,25 @@ def dfs(graph):
     def visit(u):
         nonlocal time
         # TODO 3.2: record discovery, explore white neighbors, and record finishing
-        raise NotImplementedError("Complete DFS visit")
+        # raise NotImplementedError("Complete DFS visit")
+        time += 1
+        discovered[u] = time
+        color[u] = GRAY
 
+        for v in graph[u]:
+            if color[v] == WHITE:
+                parent[v] = u
+                visit(v)
+
+        color[u] = BLACK
+        time += 1
+        finished[u] = time
+
+    for u in range(n):
+        if color[u] == WHITE:
+            visit(u)
     # TODO 3.2: start a visit at each vertex that is still white
-    raise NotImplementedError("Complete DFS outer loop")
+    # raise NotImplementedError("Complete DFS outer loop")
 
     return parent, discovered, finished
 
